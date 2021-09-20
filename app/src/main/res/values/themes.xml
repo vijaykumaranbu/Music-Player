@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:fontFamily">@font/rubik_medium</item>
+    </style>
+
+    <style name="CardViewStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_22sdp</item>
+    </style>
+
+    <style name="SeekbarTheme" parent="Widget.AppCompat.SeekBar">
+        <item name="colorAccent">@color/colorBlueDark</item>
+    </style>
+</resources>

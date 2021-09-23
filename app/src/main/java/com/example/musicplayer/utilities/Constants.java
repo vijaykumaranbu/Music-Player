@@ -12,6 +12,12 @@ import java.util.ArrayList;
 
 public class Constants {
 
+    public static final String KEY_PREFERENCE = "musicPreference";
+    public static final String PLAY_MODE_SHUFFLE = "shuffle";
+    public static final String PLAY_MODE_REPEAT = "repeat";
+    public static final String PLAY_MODE_LOOP = "loop";
+    public static final String PLAY_MODE = "playMode";
+
     public static ArrayList<AudioModel> getAllAudios(Context context) {
         ArrayList<AudioModel> audioList = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;

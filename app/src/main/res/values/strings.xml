@@ -9,4 +9,12 @@
     <string name="search_songs">Search Songs</string>
     <string name="search_music">Search Music</string>
     <string name="_00_00">00:00</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="album">Album</string>
+    <string name="songs">Songs</string>
+    <string name="albums">Albums</string>
+    <string name="Folders">Folders</string>
+    <string name="Artists">Artists</string>
+    <string name="Tracks">Tracks</string>
 </resources>

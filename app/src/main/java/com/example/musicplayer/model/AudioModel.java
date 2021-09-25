@@ -1,20 +1,37 @@
 package com.example.musicplayer.model;
 
-import java.io.Serializable;
+import android.graphics.Bitmap;
+import android.net.Uri;
 
-public class AudioModel implements Serializable {
+public class AudioModel {
 
     private String name;
     private String artist;
     private String path;
     private String album;
-    private String duration;
+    private int duration;
+    private Uri albumArtUri;
+    private Bitmap bitmap;
 
-    public AudioModel(String name, String artist, String path, String album, String duration) {
+    public AudioModel(){}
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public void setPath(String path) {
         this.path = path;
+    }
+
+    public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -34,8 +51,24 @@ public class AudioModel implements Serializable {
         return album;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
+    }
+
+    public Uri getAlbumArtUri() {
+        return albumArtUri;
+    }
+
+    public void setAlbumArtUri(Uri albumArtUri) {
+        this.albumArtUri = albumArtUri;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }
 

@@ -13,4 +13,10 @@
     <style name="SeekbarTheme" parent="Widget.AppCompat.SeekBar">
         <item name="colorAccent">@color/colorBlueDark</item>
     </style>
+
+    <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="indicatorSize">@dimen/_28sdp</item>
+        <item name="tabIndicatorFullWidth">false</item>
+    </style>
+
 </resources>

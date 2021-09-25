@@ -1,5 +1,6 @@
 package com.example.musicplayer.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,9 +13,14 @@ import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
 import com.example.musicplayer.database.PreferenceManager;
 import com.example.musicplayer.databinding.ActivityPlayerBinding;
+import com.example.musicplayer.fragment.AlbumsFragment;
+import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -149,8 +155,11 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
 
     private void loadAudio() {
-        audioList = Constants.getAllAudios(getApplicationContext());
-        position = getIntent().getIntExtra("position", -1);
+        if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_TRACK))
+            audioList = TracksFragment.audioList;
+        else if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_ALBUM))
+            audioList = AlbumSongsActivity.audioList;
+        position = getIntent().getIntExtra(Constants.KEY_POSITION,-1);
         if (audioList != null && position != -1) {
             Uri uri = Uri.parse(audioList.get(position).getPath());
             if (mediaPlayer != null) {
@@ -187,26 +196,20 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         }
     }
 
-    private void loadImage(String path) {
-        byte[] image = Constants.getAlbumArt(path);
-        if (image != null) {
+    private void loadAudioDetails() {
+        if(audioList.get(position).getAlbumArtUri() != null){
             Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(image)
+                    .load(audioList.get(position).getAlbumArtUri())
                     .into(binding.image);
-        } else {
+        }
+        else {
             Glide.with(getApplicationContext())
-                    .asBitmap()
                     .load(R.drawable.image_holder)
                     .into(binding.image);
         }
-    }
-
-    private void loadAudioDetails() {
-        loadImage(audioList.get(position).getPath());
         binding.textName.setText(Constants.removeMP3FormString(audioList.get(position).getName()));
         binding.textArtist.setText(audioList.get(position).getArtist());
-        binding.textDuration.setText(getFormattedTime(Integer.parseInt(audioList.get(position).getDuration()) / 1000));
+        binding.textDuration.setText(getFormattedTime(audioList.get(position).getDuration() / 1000));
         if (mediaPlayer != null) {
             if (mediaPlayer.isPlaying())
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);

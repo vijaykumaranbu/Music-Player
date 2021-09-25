@@ -1,26 +1,16 @@
 package com.example.musicplayer.activities;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.musicplayer.adapter.AudioListAdapter;
+import com.example.musicplayer.R;
+import com.example.musicplayer.adapter.ViewStateAdapter;
 import com.example.musicplayer.databinding.ActivityMainBinding;
-import com.example.musicplayer.listener.AudioListener;
-import com.example.musicplayer.model.AudioModel;
-import com.example.musicplayer.utilities.Constants;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements AudioListener {
+public class MainActivity extends FragmentActivity {
 
     private ActivityMainBinding binding;
 
@@ -29,36 +19,35 @@ public class MainActivity extends AppCompatActivity implements AudioListener {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        runTimePermission();
-    }
+        ViewStateAdapter viewStateAdapter = new ViewStateAdapter(getSupportFragmentManager(),getLifecycle());
+        binding.viewPager.setAdapter(viewStateAdapter);
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.Tracks));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.albums));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.Artists));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.Folders));
+        // Connecting tabLayout to adapter
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                binding.viewPager.setCurrentItem(tab.getPosition());
+            }
 
-    private void runTimePermission() {
-        Dexter.withContext(getApplicationContext())
-                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        loadAudios();
-                    }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-                        permissionToken.continuePermissionRequest();
-                    }
-                }).check();
-    }
+            }
 
-    private void loadAudios() {
-        ArrayList<AudioModel> audioList = Constants.getAllAudios(getApplicationContext());
-        AudioListAdapter adapter = new AudioListAdapter(getApplicationContext(), audioList, this);
-        binding.songsRecyclerview.setAdapter(adapter);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-    }
-
-    @Override
-    public void onAudioClicked(int position) {
-        Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-        intent.putExtra("position", position);
-        startActivity(intent);
+            }
+        });
+        // Change tab when swapping
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position));
+            }
+        });
     }
 }

@@ -1,6 +1,5 @@
 package com.example.musicplayer.activities;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,14 +12,10 @@ import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
 import com.example.musicplayer.database.PreferenceManager;
 import com.example.musicplayer.databinding.ActivityPlayerBinding;
-import com.example.musicplayer.fragment.AlbumsFragment;
 import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,7 +24,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     private ActivityPlayerBinding binding;
     private int position;
     private ArrayList<AudioModel> audioList;
-    private static MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     private final Handler handler = new Handler();
     private boolean isPlayButtonPause = false;
     private PreferenceManager preferenceManager;

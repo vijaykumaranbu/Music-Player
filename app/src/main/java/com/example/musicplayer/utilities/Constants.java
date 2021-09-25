@@ -1,24 +1,16 @@
 package com.example.musicplayer.utilities;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.example.musicplayer.R;
 import com.example.musicplayer.model.AlbumModel;
+import com.example.musicplayer.model.ArtistModel;
 import com.example.musicplayer.model.AudioModel;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-
 public class Constants {
 
     public static final String KEY_PREFERENCE = "musicPreference";
@@ -33,15 +25,16 @@ public class Constants {
     public static final String KEY_AUDIO_LIST = "audioList";
     public static final String KEY_FRAGMENT = "fragment";
     public static final String KEY_TRACK = "trackFragment";
+    public static final String KEY_TOTAL_SONGS = "totalSongs";
 
-    public static ArrayList<AudioModel> getAllAudios(Context context){
+    public static ArrayList<AudioModel> getAllAudios(Context context) {
         ArrayList<AudioModel> audioList = new ArrayList<>();
         final Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        final String[] cursor_cols = { MediaStore.Audio.Media._ID,
+        final String[] cursor_cols = {MediaStore.Audio.Media._ID,
                 MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.TITLE, MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.ALBUM_ID,
-                MediaStore.Audio.Media.DURATION };
+                MediaStore.Audio.Media.DURATION};
         final String where = MediaStore.Audio.Media.IS_MUSIC + "=1";
         final Cursor cursor = context.getContentResolver().query(uri,
                 cursor_cols, where, null, null);
@@ -65,22 +58,6 @@ public class Constants {
                     .parse("content://media/external/audio/albumart");
             Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
 
-            Log.d(TAG, "getAllAudios: " + albumArtUri);
-            Bitmap bitmap = null;
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(
-//                        context.getContentResolver(), albumArtUri);
-//                bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
-//
-//            } catch (FileNotFoundException exception) {
-//                exception.printStackTrace();
-//                bitmap = BitmapFactory.decodeResource(context.getResources(),
-//                        R.drawable.image_holder);
-//            } catch (IOException e) {
-//
-//                e.printStackTrace();
-//            }
-
             AudioModel audioModel = new AudioModel();
             audioModel.setName(track);
             audioModel.setArtist(artist);
@@ -88,14 +65,13 @@ public class Constants {
             audioModel.setAlbum(album);
             audioModel.setDuration(duration);
             audioModel.setAlbumArtUri(albumArtUri);
-            audioModel.setBitmap(bitmap);
 
             audioList.add(audioModel);
         }
         return audioList;
     }
 
-    public static ArrayList<AlbumModel> getAllAlbums(Context context){
+    public static ArrayList<AlbumModel> getAllAlbums(Context context) {
         ArrayList<AlbumModel> albumList = new ArrayList<>();
         Uri uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -104,9 +80,9 @@ public class Constants {
                 MediaStore.Audio.Albums.ALBUM_ART,
                 MediaStore.Audio.Albums.NUMBER_OF_SONGS
         };
-        Cursor cursor = context.getContentResolver().query(uri,projection,null,null,null);
-        if(cursor != null){
-            while (cursor.moveToNext()){
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
                 AlbumModel albumModel = new AlbumModel(
                         cursor.getString(0),
                         cursor.getString(1),
@@ -118,6 +94,26 @@ public class Constants {
             cursor.close();
         }
         return albumList;
+    }
+
+    public static ArrayList<ArtistModel> getAllArtists(Context context){
+        ArrayList<ArtistModel> artistList = new ArrayList<>();
+        Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
+        String[] projection = {
+                MediaStore.Audio.Artists.ARTIST,
+                MediaStore.Audio.Artists.NUMBER_OF_TRACKS
+        };
+        Cursor cursor = context.getContentResolver().query(uri,projection,null,null,null);
+        if(cursor != null){
+            while (cursor.moveToNext()){
+                ArtistModel artistModel = new ArtistModel();
+                artistModel.setArtist(cursor.getString(0));
+                artistModel.setTotalSongs(cursor.getString(1));
+                artistList.add(artistModel);
+            }
+           cursor.close();
+        }
+        return artistList;
     }
 
     public static String removeMP3FormString(String name) {

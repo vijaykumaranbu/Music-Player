@@ -18,8 +18,6 @@ import com.example.musicplayer.listener.AlbumListener;
 import com.example.musicplayer.model.AlbumModel;
 import com.example.musicplayer.utilities.Constants;
 
-import java.util.ArrayList;
-
 public class AlbumsFragment extends Fragment implements AlbumListener {
 
     private FragmentAlbumsBinding binding;
@@ -38,7 +36,7 @@ public class AlbumsFragment extends Fragment implements AlbumListener {
                              Bundle savedInstanceState) {
         binding = FragmentAlbumsBinding.inflate(inflater,container,false);
         binding.albumRecyclerview.setHasFixedSize(true);
-        binding.albumRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.albumRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3));
         AlbumAdapter adapter = new AlbumAdapter(getContext(), Constants.getAllAlbums(context),this);
         binding.albumRecyclerview.setAdapter(adapter);
         return binding.getRoot();
@@ -47,9 +45,11 @@ public class AlbumsFragment extends Fragment implements AlbumListener {
     @Override
     public void onAlbumClicked(AlbumModel album, int position) {
         Intent intent = new Intent(context, AlbumSongsActivity.class);
+        intent.putExtra(Constants.KEY_FRAGMENT,Constants.KEY_ALBUM);
         intent.putExtra(Constants.KEY_ALBUM,album.getAlbum());
         intent.putExtra(Constants.KEY_ARTIST,album.getArtist());
         intent.putExtra(Constants.KEY_ALBUM_ART,album.getAlbumArt());
+        intent.putExtra(Constants.KEY_TOTAL_SONGS,album.getTotalSongs());
         startActivity(intent);
     }
 }

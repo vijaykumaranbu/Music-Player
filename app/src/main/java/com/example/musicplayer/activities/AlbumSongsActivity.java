@@ -1,10 +1,12 @@
 package com.example.musicplayer.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
@@ -14,13 +16,14 @@ import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.listener.AudioListener;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
+import com.google.android.material.shape.ShapePath;
 
 import java.util.ArrayList;
 
 public class AlbumSongsActivity extends AppCompatActivity implements AudioListener {
 
     private ActivityAlbumSongsBinding binding;
-    private String album, albumArt, artist;
+    private String album, albumArt, artist, totalSongs;
     public static ArrayList<AudioModel> audioList;
 
     @Override
@@ -33,32 +36,75 @@ public class AlbumSongsActivity extends AppCompatActivity implements AudioListen
     }
 
     private void setListeners() {
+        binding.imageBack.setOnClickListener(view -> onBackPressed());
         binding.playFloatButton.setOnClickListener(view -> {
-
+            if(PlayerActivity.mediaPlayer.isPlaying() && PlayerActivity.mediaPlayer != null){
+                PlayerActivity.mediaPlayer.stop();
+                PlayerActivity.mediaPlayer.release();
+                binding.playFloatButton.setFabIcon(ResourcesCompat.getDrawable(getResources(),R.drawable.ic_play,getTheme()));
+            }
+            else {
+                if (audioList != null) {
+                    PlayerActivity.mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(0).getPath()));
+                    PlayerActivity.mediaPlayer.start();
+                    binding.playFloatButton.setFabIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_pause, getTheme()));
+                }
+            }
         });
     }
 
     private void loadAlbumDetails() {
-        album = getIntent().getStringExtra(Constants.KEY_ALBUM);
-        albumArt = getIntent().getStringExtra(Constants.KEY_ALBUM_ART);
-        artist = getIntent().getStringExtra(Constants.KEY_ARTIST);
-        if(albumArt != null){
-            Glide.with(getApplicationContext())
-                    .load(albumArt)
-                    .into(binding.image);
+        if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_ALBUM)){
+            album = getIntent().getStringExtra(Constants.KEY_ALBUM);
+            albumArt = getIntent().getStringExtra(Constants.KEY_ALBUM_ART);
+            artist = getIntent().getStringExtra(Constants.KEY_ARTIST);
+            totalSongs = getIntent().getStringExtra(Constants.KEY_TOTAL_SONGS);
+            binding.textAlbum.setText(album);
+            binding.textArtist.setText(artist);
+            binding.textSongs.setText(String.format("%s Songs",totalSongs));
+            if(albumArt != null){
+                Glide.with(getApplicationContext())
+                        .load(albumArt)
+                        .into(binding.image);
+            }
+            else {
+                Glide.with(getApplicationContext())
+                        .load(R.drawable.image_holder)
+                        .into(binding.image);
+            }
+            audioList = getAlbumSongList(album);
+            TrackAdapter adapter = new TrackAdapter(getApplicationContext(), audioList, this);
+            binding.albumSongsRecyclerview.setAdapter(adapter);
+            binding.albumSongsRecyclerview.setHasFixedSize(true);
         }
-        else {
+        else if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_ARTIST)){
+            artist = getIntent().getStringExtra(Constants.KEY_ARTIST);
+            totalSongs = getIntent().getStringExtra(Constants.KEY_TOTAL_SONGS);
+            binding.textAlbum.setText("");
+            binding.textArtist.setText(artist);
+            binding.textSongs.setText(String.format("%s Songs",totalSongs));
             Glide.with(getApplicationContext())
-                    .load(R.drawable.image_holder)
+                    .load(R.drawable.artist_placeholder)
                     .into(binding.image);
+            audioList = getArtistSongList(artist);
+            TrackAdapter adapter = new TrackAdapter(getApplicationContext(), audioList, this);
+            binding.albumSongsRecyclerview.setAdapter(adapter);
+            binding.albumSongsRecyclerview.setHasFixedSize(true);
         }
-        audioList = getAlbumSongsList(album);
-        TrackAdapter adapter = new TrackAdapter(getApplicationContext(), audioList, this);
-        binding.albumSongsRecyclerview.setAdapter(adapter);
-        binding.albumSongsRecyclerview.setHasFixedSize(true);
+
     }
 
-    private ArrayList<AudioModel> getAlbumSongsList(String album) {
+    private ArrayList<AudioModel> getArtistSongList(String artist) {
+        ArrayList<AudioModel> audioList = new ArrayList<>();
+        for (int i = 0; i < TracksFragment.audioList.size(); i++) {
+            if (artist.equals(TracksFragment.audioList.get(i).getArtist())) {
+                audioList.add(TracksFragment.audioList.get(i));
+            }
+        }
+        return audioList;
+    }
+
+    private ArrayList<AudioModel> getAlbumSongList(String album) {
         ArrayList<AudioModel> audioList = new ArrayList<>();
         for (int i = 0; i < TracksFragment.audioList.size(); i++) {
             if (album.equals(TracksFragment.audioList.get(i).getAlbum())) {

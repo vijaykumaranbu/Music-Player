@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AlbumSongsActivity">
-
     <View
         android:id="@+id/imageSupporter"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:background="@null"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image"
@@ -24,17 +24,80 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/image_holder"
         android:scaleType="centerCrop"
-        app:riv_corner_radius_bottom_left="@dimen/_28sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/imageSupporter"/>
 
+    <LinearLayout
+        android:id="@+id/layoutAlbumDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/image">
+
+        <TextView
+            android:id="@+id/textAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/rubik_bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/album"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/textArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/rubik_medium"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/Artists"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/textSongs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/rubik_medium"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/songs"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10ssp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageBack"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="@drawable/background_image_back"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/_6sdp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorTextPrimary" />
+
     <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
         android:id="@+id/playFloatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
         app:fabType="circle"
         app:fabSize="normal"
         app:fabColor="@color/colorBlueDark"
@@ -43,7 +106,7 @@
         app:fabElevation="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@+id/imageSupporter"
         app:layout_constraintBottom_toBottomOf="@+id/imageSupporter"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumSongsRecyclerview"
@@ -51,10 +114,11 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="@dimen/_12sdp"
+        android:background="@drawable/background_white"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/imageSupporter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

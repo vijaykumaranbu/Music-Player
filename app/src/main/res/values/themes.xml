@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:fontFamily">@font/rubik_medium</item>
     </style>
 
@@ -16,7 +16,6 @@
 
     <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="indicatorSize">@dimen/_28sdp</item>
-        <item name="tabIndicatorFullWidth">false</item>
     </style>
 
 </resources>

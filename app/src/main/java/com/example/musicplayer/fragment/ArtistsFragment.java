@@ -1,7 +1,10 @@
 package com.example.musicplayer.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,58 +12,48 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.musicplayer.R;
+import com.example.musicplayer.activities.AlbumSongsActivity;
+import com.example.musicplayer.adapter.ArtistAdapter;
+import com.example.musicplayer.adapter.TrackAdapter;
+import com.example.musicplayer.databinding.FragmentArtistsBinding;
+import com.example.musicplayer.listener.ArtistListener;
+import com.example.musicplayer.listener.AudioListener;
+import com.example.musicplayer.model.ArtistModel;
+import com.example.musicplayer.utilities.Constants;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ArtistsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ArtistsFragment extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class ArtistsFragment extends Fragment implements ArtistListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static ArrayList<ArtistModel> artistList;
+    private FragmentArtistsBinding binding;
+    private Context context;
 
-    public ArtistsFragment() {
-        // Required empty public constructor
-    }
+    public ArtistsFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ArtistsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ArtistsFragment newInstance(String param1, String param2) {
-        ArtistsFragment fragment = new ArtistsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artists, container, false);
+        binding = FragmentArtistsBinding.inflate(inflater,container,false);
+        artistList = Constants.getAllArtists(context);
+        ArtistAdapter adapter = new ArtistAdapter(context,artistList,this);
+        binding.artistRecyclerview.setAdapter(adapter);
+        binding.artistRecyclerview.setHasFixedSize(true);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onArtistClicked(ArtistModel artist,int position) {
+        Intent intent = new Intent(context, AlbumSongsActivity.class);
+        intent.putExtra(Constants.KEY_FRAGMENT,Constants.KEY_ARTIST);
+        intent.putExtra(Constants.KEY_ARTIST,artist.getArtist());
+        intent.putExtra(Constants.KEY_TOTAL_SONGS,artist.getTotalSongs());
+        startActivity(intent);
     }
 }

@@ -16,7 +16,6 @@ import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.listener.AudioListener;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
-import com.google.android.material.shape.ShapePath;
 
 import java.util.ArrayList;
 

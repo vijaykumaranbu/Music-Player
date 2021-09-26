@@ -4,13 +4,25 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.example.musicplayer.model.AlbumModel;
 import com.example.musicplayer.model.ArtistModel;
 import com.example.musicplayer.model.AudioModel;
+import com.example.musicplayer.model.FolderModel;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+
 public class Constants {
 
     public static final String KEY_PREFERENCE = "musicPreference";
@@ -26,6 +38,8 @@ public class Constants {
     public static final String KEY_FRAGMENT = "fragment";
     public static final String KEY_TRACK = "trackFragment";
     public static final String KEY_TOTAL_SONGS = "totalSongs";
+    private static final String TAG = "Constants";
+    public static final String KEY_FOLDER = "folder";
 
     public static ArrayList<AudioModel> getAllAudios(Context context) {
         ArrayList<AudioModel> audioList = new ArrayList<>();
@@ -40,6 +54,8 @@ public class Constants {
                 cursor_cols, where, null, null);
 
         while (cursor.moveToNext()) {
+            String mediaId = cursor.getString(cursor
+                    .getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
             String artist = cursor.getString(cursor
                     .getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
             String album = cursor.getString(cursor
@@ -58,11 +74,16 @@ public class Constants {
                     .parse("content://media/external/audio/albumart");
             Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
 
+            String dirName = Objects.requireNonNull(new File(data).getParentFile()).getName();
+            Log.d(TAG, "getAllAudios: dirName : " + dirName);
+
             AudioModel audioModel = new AudioModel();
+            audioModel.setMediaId(mediaId);
             audioModel.setName(track);
             audioModel.setArtist(artist);
             audioModel.setPath(data);
             audioModel.setAlbum(album);
+            audioModel.setDirName(dirName);
             audioModel.setDuration(duration);
             audioModel.setAlbumArtUri(albumArtUri);
 
@@ -96,24 +117,99 @@ public class Constants {
         return albumList;
     }
 
-    public static ArrayList<ArtistModel> getAllArtists(Context context){
+    public static ArrayList<ArtistModel> getAllArtists(Context context) {
         ArrayList<ArtistModel> artistList = new ArrayList<>();
         Uri uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI;
         String[] projection = {
                 MediaStore.Audio.Artists.ARTIST,
                 MediaStore.Audio.Artists.NUMBER_OF_TRACKS
         };
-        Cursor cursor = context.getContentResolver().query(uri,projection,null,null,null);
-        if(cursor != null){
-            while (cursor.moveToNext()){
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
                 ArtistModel artistModel = new ArtistModel();
                 artistModel.setArtist(cursor.getString(0));
                 artistModel.setTotalSongs(cursor.getString(1));
                 artistList.add(artistModel);
             }
-           cursor.close();
+            cursor.close();
         }
         return artistList;
+    }
+
+    public static ArrayList<FolderModel> getAudioFolders(Context context) {
+
+        ArrayList<FolderModel> folderList = new ArrayList<>();
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String rootSD = System.getenv("EXTERNAL_STORAGE");
+        File file = new File(root);
+        assert rootSD != null;
+        File fileSD = new File(rootSD);
+
+        Log.d(TAG, "root: " + root);
+        Log.d(TAG,"rootSD: " + rootSD);
+
+        File[] list = file.listFiles();
+        File[] listSD = fileSD.listFiles();
+
+        assert list != null;
+        for (File value : list) {
+            File mFile = new File(file, value.getName());
+            File[] dirList = mFile.listFiles();
+            if (dirList == null) continue;
+            for (File item : dirList) {
+                if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
+                    FolderModel folderModel = new FolderModel();
+                    folderModel.setName(value.getName());
+                    folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
+                    folderList.add(folderModel);
+                    break;
+                }
+            }
+        }
+
+        assert listSD != null;
+        for (File value : listSD) {
+            File mFile = new File(fileSD, value.getName());
+            File[] dirList = mFile.listFiles();
+            if (dirList == null) continue;
+            for (File item : dirList) {
+                if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
+                    FolderModel folderModel = new FolderModel();
+                    folderModel.setName(value.getName());
+                    folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
+                    folderList.add(folderModel);
+                    break;
+                }
+            }
+        }
+        return folderList;
+
+    }
+
+    private static String getAudioFileCount(Context context, String dirPath) {
+        String selection = MediaStore.Audio.Media.DATA + " like ?";
+        String[] projection = {MediaStore.Audio.Media.DATA};
+        String[] selectionArgs = {dirPath + "%"};
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                selection,
+                selectionArgs,
+                null);
+        return String.valueOf(cursor.getCount());
+    }
+
+    public static ArrayList<AudioModel> getFolderAudioList(ArrayList<AudioModel> audioList,String parent) {
+        ArrayList<AudioModel> audios = new ArrayList<>();
+        if (audioList != null) {
+            for (int i = 0; i < audioList.size(); i++) {
+                if (audioList.get(i).getDirName().equals(parent)) {
+                    audios.add(audioList.get(i));
+                }
+            }
+        }
+        return audios;
     }
 
     public static String removeMP3FormString(String name) {

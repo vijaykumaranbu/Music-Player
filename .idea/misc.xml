@@ -16,8 +16,9 @@
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/ic_shuffle.xml" value="0.24027777777777778" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/font/font.xml" value="0.284375" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_album_songs.xml" value="0.21342592592592594" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_folder_songs.xml" value="0.16052631578947368" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_main.xml" value="0.152" />
-        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_player.xml" value="0.22592592592592592" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_player.xml" value="0.176" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_playing.xml" value="0.25" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/activity_search_music.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/fragment_album.xml" value="0.22592592592592592" />
@@ -28,6 +29,7 @@
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/fragment_tracks.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/item_container_albums.xml" value="0.152" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/item_container_artist.xml" value="0.16052631578947368" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/item_container_folders.xml" value="0.16052631578947368" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/item_container_song.xml" value="0.22592592592592592" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/layout/item_container_tracks.xml" value="0.22592592592592592" />
       </map>

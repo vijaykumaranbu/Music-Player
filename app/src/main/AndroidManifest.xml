@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:replace="android:theme">
         <activity
+            android:name=".activities.FolderSongsActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.AlbumSongsActivity"
             android:exported="true" />
         <activity

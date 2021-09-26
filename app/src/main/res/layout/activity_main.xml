@@ -61,6 +61,7 @@
         app:tabIndicatorHeight="@dimen/_2sdp"
         app:tabIndicatorGravity="bottom"
         app:tabRippleColor="@null"
+        app:tabIndicatorFullWidth="false"
         app:tabIndicatorAnimationMode="elastic"
         style="@style/TabLayoutStyle"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"

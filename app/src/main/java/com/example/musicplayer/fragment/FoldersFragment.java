@@ -1,66 +1,58 @@
 package com.example.musicplayer.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.musicplayer.R;
+import com.example.musicplayer.activities.FolderSongsActivity;
+import com.example.musicplayer.adapter.FolderAdapter;
+import com.example.musicplayer.databinding.FragmentFoldersBinding;
+import com.example.musicplayer.listener.FolderListener;
+import com.example.musicplayer.model.FolderModel;
+import com.example.musicplayer.utilities.Constants;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FoldersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FoldersFragment extends Fragment {
+import java.util.ArrayList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class FoldersFragment extends Fragment implements FolderListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentFoldersBinding binding;
+    private ArrayList<FolderModel> folderList;
+    private Context context;
 
     public FoldersFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FoldersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FoldersFragment newInstance(String param1, String param2) {
-        FoldersFragment fragment = new FoldersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_folders, container, false);
+        binding = FragmentFoldersBinding.inflate(inflater,container,false);
+        folderList = Constants.getAudioFolders(context);
+        FolderAdapter adapter = new FolderAdapter(folderList,this);
+        binding.folderRecyclerview.setAdapter(adapter);
+        binding.folderRecyclerview.setHasFixedSize(true);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onFolderClicked(FolderModel folder) {
+        Intent intent = new Intent(context, FolderSongsActivity.class);
+        intent.putExtra(Constants.KEY_FOLDER,folder.getName());
+        intent.putExtra(Constants.KEY_TOTAL_SONGS,folder.getTotalSongs());
+        startActivity(intent);
     }
 }

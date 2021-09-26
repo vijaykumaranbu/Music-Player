@@ -150,10 +150,17 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
 
     private void loadAudio() {
-        if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_TRACK))
-            audioList = TracksFragment.audioList;
-        else if(getIntent().getStringExtra(Constants.KEY_FRAGMENT).equals(Constants.KEY_ALBUM))
-            audioList = AlbumSongsActivity.audioList;
+        switch (getIntent().getStringExtra(Constants.KEY_FRAGMENT)) {
+            case Constants.KEY_TRACK:
+                audioList = TracksFragment.audioList;
+                break;
+            case Constants.KEY_ALBUM:
+                audioList = AlbumSongsActivity.audioList;
+                break;
+            case Constants.KEY_FOLDER:
+                audioList = FolderSongsActivity.audioList;
+                break;
+        }
         position = getIntent().getIntExtra(Constants.KEY_POSITION,-1);
         if (audioList != null && position != -1) {
             Uri uri = Uri.parse(audioList.get(position).getPath());
@@ -195,6 +202,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         if(audioList.get(position).getAlbumArtUri() != null){
             Glide.with(getApplicationContext())
                     .load(audioList.get(position).getAlbumArtUri())
+                    .placeholder(R.drawable.image_holder)
                     .into(binding.image);
         }
         else {

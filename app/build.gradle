@@ -61,6 +61,4 @@ dependencies {
     // Floating Action Button
     implementation 'com.robertlevonyan.view:CustomFloatingActionButton:3.1.4'
 
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.8'
 }

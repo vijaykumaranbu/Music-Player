@@ -70,6 +70,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             if(art != null){
                 Glide.with(context)
                         .load(art)
+                        .placeholder(R.drawable.image_holder)
                         .into(binding.image);
             }
             else{

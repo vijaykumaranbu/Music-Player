@@ -65,6 +65,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             if(art != null){
                 Glide.with(context)
                         .load(art)
+                        .placeholder(R.drawable.image_holder)
                         .into(binding.image);
             }
             else {

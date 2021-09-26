@@ -19,8 +19,8 @@
         app:flow_maxElementsWrap="5"
         app:flow_wrapMode="aligned"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/imagePlayMode"
@@ -100,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/rubik_medium"
         android:textColor="@color/colorTextSecondary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
@@ -111,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/rubik_medium"
         android:includeFontPadding="false"
         android:text="@{duration}"
         android:textColor="@color/colorTextSecondary"
@@ -126,6 +128,7 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_45sdp"
         android:ellipsize="end"
+        android:fontFamily="@font/rubik_medium"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
@@ -159,11 +162,13 @@
         android:layout_height="@dimen/_200sdp"
         android:adjustViewBounds="false"
         android:scaleType="centerCrop"
+        android:src="@drawable/image_holder"
         app:layout_constraintBottom_toTopOf="@+id/textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageBack"
         app:riv_oval="true" />
+
 
     <ImageView
         android:id="@+id/imageBack"
@@ -193,7 +198,4 @@
         app:layout_constraintTop_toTopOf="@+id/imageBack" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 

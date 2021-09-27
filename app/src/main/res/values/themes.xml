@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorBlueDark</item>
+        <item name="android:fontFamily">@font/rubik_medium</item>
     </style>
 
     <style name="CardViewStyle">

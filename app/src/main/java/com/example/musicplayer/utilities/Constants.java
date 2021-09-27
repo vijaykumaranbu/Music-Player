@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.storage.StorageManager;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.musicplayer.model.AlbumModel;
 import com.example.musicplayer.model.ArtistModel;
@@ -15,13 +17,11 @@ import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.model.FolderModel;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 
 public class Constants {
 
@@ -34,10 +34,10 @@ public class Constants {
     public static final String KEY_ALBUM = "album";
     public static final String KEY_ALBUM_ART = "albumArt";
     public static final String KEY_POSITION = "position";
-    public static final String KEY_AUDIO_LIST = "audioList";
     public static final String KEY_FRAGMENT = "fragment";
     public static final String KEY_TRACK = "trackFragment";
     public static final String KEY_TOTAL_SONGS = "totalSongs";
+    public static final String KEY_FOLDER_PATH = "folderPath" ;
     private static final String TAG = "Constants";
     public static final String KEY_FOLDER = "folder";
 
@@ -54,8 +54,6 @@ public class Constants {
                 cursor_cols, where, null, null);
 
         while (cursor.moveToNext()) {
-            String mediaId = cursor.getString(cursor
-                    .getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
             String artist = cursor.getString(cursor
                     .getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
             String album = cursor.getString(cursor
@@ -74,16 +72,15 @@ public class Constants {
                     .parse("content://media/external/audio/albumart");
             Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
 
-            String dirName = Objects.requireNonNull(new File(data).getParentFile()).getName();
-            Log.d(TAG, "getAllAudios: dirName : " + dirName);
+            String parentPath = new File(data).getParent();
+            Log.d(TAG, "getAllAudios: dirName : " + parentPath);
 
             AudioModel audioModel = new AudioModel();
-            audioModel.setMediaId(mediaId);
             audioModel.setName(track);
             audioModel.setArtist(artist);
             audioModel.setPath(data);
             audioModel.setAlbum(album);
-            audioModel.setDirName(dirName);
+            audioModel.setParentPath(parentPath);
             audioModel.setDuration(duration);
             audioModel.setAlbumArtUri(albumArtUri);
 
@@ -141,27 +138,29 @@ public class Constants {
 
         ArrayList<FolderModel> folderList = new ArrayList<>();
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-        String rootSD = System.getenv("EXTERNAL_STORAGE");
+
         File file = new File(root);
-        assert rootSD != null;
-        File fileSD = new File(rootSD);
+        File fileSD = SDCard.findSdCardPath(context);
 
         Log.d(TAG, "root: " + root);
-        Log.d(TAG,"rootSD: " + rootSD);
+        Log.d(TAG, "root SD: " + fileSD.getAbsolutePath());
 
         File[] list = file.listFiles();
         File[] listSD = fileSD.listFiles();
 
+
         assert list != null;
         for (File value : list) {
-            File mFile = new File(file, value.getName());
+            File mFile = new File(file,value.getName());
             File[] dirList = mFile.listFiles();
             if (dirList == null) continue;
             for (File item : dirList) {
                 if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
                     FolderModel folderModel = new FolderModel();
                     folderModel.setName(value.getName());
+                    folderModel.setPath(value.getPath());
                     folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
+                    Log.d(TAG, "folder Path: " + value.getPath());
                     folderList.add(folderModel);
                     break;
                 }
@@ -177,12 +176,15 @@ public class Constants {
                 if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
                     FolderModel folderModel = new FolderModel();
                     folderModel.setName(value.getName());
+                    folderModel.setPath(value.getPath());
                     folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
+                    Log.d(TAG, "folder SD Path: " + value.getPath());
                     folderList.add(folderModel);
                     break;
                 }
             }
         }
+
         return folderList;
 
     }
@@ -204,7 +206,7 @@ public class Constants {
         ArrayList<AudioModel> audios = new ArrayList<>();
         if (audioList != null) {
             for (int i = 0; i < audioList.size(); i++) {
-                if (audioList.get(i).getDirName().equals(parent)) {
+                if (audioList.get(i).getParentPath().equals(parent)) {
                     audios.add(audioList.get(i));
                 }
             }
@@ -215,4 +217,36 @@ public class Constants {
     public static String removeMP3FormString(String name) {
         return name.replace(".mp3", "");
     }
+
+    private static String getExternalStoragePath(Context mContext, boolean is_removable) {
+
+        StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
+        Class<?> storageVolumeClazz = null;
+        try {
+            storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+            Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
+            Method getPath = storageVolumeClazz.getMethod("getPath");
+            Method isRemovable = storageVolumeClazz.getMethod("isRemovable");
+            Object result = getVolumeList.invoke(mStorageManager);
+            final int length = Array.getLength(result);
+            for (int i = 0; i < length; i++) {
+                Object storageVolumeElement = Array.get(result, i);
+                String path = (String) getPath.invoke(storageVolumeElement);
+                boolean removable = (Boolean) isRemovable.invoke(storageVolumeElement);
+                if (is_removable == removable) {
+                    return path;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

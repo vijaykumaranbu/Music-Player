@@ -3,6 +3,7 @@ package com.example.musicplayer.model;
 public class FolderModel {
 
     private String name;
+    private String path;
     private String totalSongs;
 
     public FolderModel(){}
@@ -13,6 +14,14 @@ public class FolderModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getTotalSongs() {

@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
 import com.example.musicplayer.databinding.ItemContainerArtistBinding;
 import com.example.musicplayer.listener.ArtistListener;
-import com.example.musicplayer.listener.AudioListener;
 import com.example.musicplayer.model.ArtistModel;
 
 import java.util.List;

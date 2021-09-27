@@ -1,29 +1,18 @@
 package com.example.musicplayer.model;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
 public class AudioModel {
 
-    private String mediaId;
     private String name;
     private String artist;
     private String path;
     private String album;
-    private String dirName;
+    private String parentPath;
     private int duration;
     private Uri albumArtUri;
-    private Bitmap bitmap;
 
     public AudioModel(){}
-
-    public String getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -73,20 +62,12 @@ public class AudioModel {
         this.albumArtUri = albumArtUri;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
+    public String getParentPath() {
+        return parentPath;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-
-    public String getDirName() {
-        return dirName;
-    }
-
-    public void setDirName(String dirName) {
-        this.dirName = dirName;
+    public void setParentPath(String parentPath) {
+        this.parentPath = parentPath;
     }
 }
 

@@ -10,13 +10,16 @@
         <item name="cornerSize">@dimen/_22sdp</item>
     </style>
 
-    <style name="SeekbarTheme" parent="Widget.AppCompat.SeekBar">
-        <item name="colorAccent">@color/colorBlueDark</item>
-    </style>
-
     <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="indicatorSize">@dimen/_28sdp</item>
         <item name="fontFamily">@font/rubik_bold</item>
+    </style>
+
+    <style name="seekbarTheme">
+        <item name="android:progressDrawable">@drawable/background_seekbar</item>
+        <item name="android:thumb">@drawable/background_seekbar_thumb</item>
+        <item name="android:minHeight">@dimen/_2sdp</item>
+        <item name="android:maxHeight">@dimen/_2sdp</item>
     </style>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.example.musicplayer.activities;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +21,8 @@ import com.example.musicplayer.utilities.Constants;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
+public class PlayerActivity extends AppCompatActivity implements
+        MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
 
     private ActivityPlayerBinding binding;
     private int position;
@@ -28,6 +31,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     private final Handler handler = new Handler();
     private boolean isPlayButtonPause = false;
     private PreferenceManager preferenceManager;
+    private AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         binding = ActivityPlayerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        setAudioFocus();
         loadAudio();
     }
 
@@ -145,7 +151,13 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
                 isPlayButtonPause = false;
             }
+            setAudioFocus();
         }
+    }
+
+    private void setAudioFocus(){
+        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN);
     }
 
 
@@ -252,4 +264,25 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             return random;
     }
 
+    @Override
+    public void onAudioFocusChange(int focusChange) {
+        switch (focusChange)
+        {
+            case AudioManager.AUDIOFOCUS_GAIN:
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                mediaPlayer.start();
+                binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
+                isPlayButtonPause = false;
+                 // Resume your media player here
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS:
+
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                // Pause your media player here
+                mediaPlayer.pause();
+                binding.imagePlayPause.setImageResource(R.drawable.ic_play);
+                isPlayButtonPause = true;
+                break;
+        }
+    }
 }

@@ -40,8 +40,7 @@ public class FoldersFragment extends Fragment implements FolderListener {
         binding = FragmentFoldersBinding.inflate(inflater,container,false);
         folderList = Constants.getAudioFolders(context);
         FolderAdapter adapter = new FolderAdapter(folderList,this);
-        binding.folderRecyclerview.setAdapter(adapter)
-        ;
+        binding.folderRecyclerview.setAdapter(adapter);
         binding.folderRecyclerview.setHasFixedSize(true);
         return binding.getRoot();
     }

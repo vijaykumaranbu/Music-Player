@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.SeekBar;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,10 @@ public class PlayerActivity extends AppCompatActivity implements
         audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
         setAudioFocus();
         loadAudio();
+    }
+
+    private void setAudioFocus() {
+        audioManager.requestAudioFocus(this,AudioManager.STREAM_MUSIC,AudioManager.AUDIOFOCUS_GAIN);
     }
 
     @Override
@@ -119,6 +124,7 @@ public class PlayerActivity extends AppCompatActivity implements
         mediaPlayer.setOnCompletionListener(this);
         checkLoopIfTrue();
         loadAudioDetails();
+        setAudioFocus();
     }
 
     private void playNext() {
@@ -134,6 +140,7 @@ public class PlayerActivity extends AppCompatActivity implements
         mediaPlayer.setOnCompletionListener(this);
         checkLoopIfTrue();
         loadAudioDetails();
+        setAudioFocus();
     }
 
     private void checkLoopIfTrue() {
@@ -151,13 +158,8 @@ public class PlayerActivity extends AppCompatActivity implements
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
                 isPlayButtonPause = false;
             }
-            setAudioFocus();
         }
-    }
-
-    private void setAudioFocus(){
-        audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN);
+        setAudioFocus();
     }
 
 
@@ -173,7 +175,7 @@ public class PlayerActivity extends AppCompatActivity implements
                 audioList = FolderSongsActivity.audioList;
                 break;
         }
-        position = getIntent().getIntExtra(Constants.KEY_POSITION,-1);
+        position = getIntent().getIntExtra(Constants.KEY_POSITION, -1);
         if (audioList != null && position != -1) {
             Uri uri = Uri.parse(audioList.get(position).getPath());
             if (mediaPlayer != null) {
@@ -211,13 +213,12 @@ public class PlayerActivity extends AppCompatActivity implements
     }
 
     private void loadAudioDetails() {
-        if(audioList.get(position).getAlbumArtUri() != null){
+        if (audioList.get(position).getAlbumArtUri() != null) {
             Glide.with(getApplicationContext())
                     .load(audioList.get(position).getAlbumArtUri())
                     .placeholder(R.drawable.image_holder)
                     .into(binding.image);
-        }
-        else {
+        } else {
             Glide.with(getApplicationContext())
                     .load(R.drawable.image_holder)
                     .into(binding.image);
@@ -272,17 +273,20 @@ public class PlayerActivity extends AppCompatActivity implements
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                 mediaPlayer.start();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
-                isPlayButtonPause = false;
-                 // Resume your media player here
+                isPlayButtonPause = false; // Resume your media player here
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
-
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                // Pause your media player here
                 mediaPlayer.pause();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_play);
-                isPlayButtonPause = true;
+                isPlayButtonPause = true;// Pause your media player here
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        audioManager.abandonAudioFocus(this);
     }
 }

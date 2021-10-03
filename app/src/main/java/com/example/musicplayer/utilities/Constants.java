@@ -1,25 +1,29 @@
 package com.example.musicplayer.utilities;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
-import android.os.storage.StorageManager;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.musicplayer.R;
 import com.example.musicplayer.model.AlbumModel;
 import com.example.musicplayer.model.ArtistModel;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.model.FolderModel;
 
 import java.io.File;
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -216,37 +220,6 @@ public class Constants {
 
     public static String removeMP3FormString(String name) {
         return name.replace(".mp3", "");
-    }
-
-    private static String getExternalStoragePath(Context mContext, boolean is_removable) {
-
-        StorageManager mStorageManager = (StorageManager) mContext.getSystemService(Context.STORAGE_SERVICE);
-        Class<?> storageVolumeClazz = null;
-        try {
-            storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
-            Method getVolumeList = mStorageManager.getClass().getMethod("getVolumeList");
-            Method getPath = storageVolumeClazz.getMethod("getPath");
-            Method isRemovable = storageVolumeClazz.getMethod("isRemovable");
-            Object result = getVolumeList.invoke(mStorageManager);
-            final int length = Array.getLength(result);
-            for (int i = 0; i < length; i++) {
-                Object storageVolumeElement = Array.get(result, i);
-                String path = (String) getPath.invoke(storageVolumeElement);
-                boolean removable = (Boolean) isRemovable.invoke(storageVolumeElement);
-                if (is_removable == removable) {
-                    return path;
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.musicplayer.activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -8,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.musicplayer.R;
 import com.example.musicplayer.adapter.ViewStateAdapter;
 import com.example.musicplayer.databinding.ActivityMainBinding;
+import com.example.musicplayer.utilities.Constants;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends FragmentActivity {

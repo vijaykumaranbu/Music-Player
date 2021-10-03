@@ -17,19 +17,24 @@
         tools:replace="android:theme">
         <activity
             android:name=".activities.FolderSongsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".activities.AlbumSongsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".activities.SearchMusicActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".activities.PlayerActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"
+            android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

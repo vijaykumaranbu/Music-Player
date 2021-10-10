@@ -1,23 +1,13 @@
 package com.example.musicplayer.utilities;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import androidx.core.content.ContextCompat;
-
-import com.example.musicplayer.R;
 import com.example.musicplayer.model.AlbumModel;
 import com.example.musicplayer.model.ArtistModel;
 import com.example.musicplayer.model.AudioModel;
@@ -140,18 +130,13 @@ public class Constants {
 
     public static ArrayList<FolderModel> getAudioFolders(Context context) {
 
+        // get external folders
         ArrayList<FolderModel> folderList = new ArrayList<>();
         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-
         File file = new File(root);
-        File fileSD = SDCard.findSdCardPath(context);
 
         Log.d(TAG, "root: " + root);
-        Log.d(TAG, "root SD: " + fileSD.getAbsolutePath());
-
         File[] list = file.listFiles();
-        File[] listSD = fileSD.listFiles();
-
 
         assert list != null;
         for (File value : list) {
@@ -171,22 +156,34 @@ public class Constants {
             }
         }
 
-        assert listSD != null;
-        for (File value : listSD) {
-            File mFile = new File(fileSD, value.getName());
-            File[] dirList = mFile.listFiles();
-            if (dirList == null) continue;
-            for (File item : dirList) {
-                if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
-                    FolderModel folderModel = new FolderModel();
-                    folderModel.setName(value.getName());
-                    folderModel.setPath(value.getPath());
-                    folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
-                    Log.d(TAG, "folder SD Path: " + value.getPath());
-                    folderList.add(folderModel);
-                    break;
+        // get SD Folders
+        // Check SD is available in device
+        boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+        boolean isSDSupported = Environment.isExternalStorageRemovable();
+        if(isSDPresent && isSDSupported)
+        {
+            File fileSD = SDCard.findSdCardPath(context);
+            File[] listSD = fileSD.listFiles();
+            Log.d(TAG, "root SD: " + fileSD.getAbsolutePath());
+
+            assert listSD != null;
+            for (File value : listSD) {
+                File mFile = new File(fileSD, value.getName());
+                File[] dirList = mFile.listFiles();
+                if (dirList == null) continue;
+                for (File item : dirList) {
+                    if (item.getName().toLowerCase(Locale.getDefault()).endsWith(".mp3")) {
+                        FolderModel folderModel = new FolderModel();
+                        folderModel.setName(value.getName());
+                        folderModel.setPath(value.getPath());
+                        folderModel.setTotalSongs(getAudioFileCount(context, value.getPath()));
+                        Log.d(TAG, "folder SD Path: " + value.getPath());
+                        folderList.add(folderModel);
+                        break;
+                    }
                 }
-            }
+        }
+
         }
 
         return folderList;

@@ -36,7 +36,7 @@ public class AlbumsFragment extends Fragment implements AlbumListener {
                              Bundle savedInstanceState) {
         binding = FragmentAlbumsBinding.inflate(inflater,container,false);
         binding.albumRecyclerview.setHasFixedSize(true);
-        binding.albumRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3));
+        binding.albumRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),2));
         AlbumAdapter adapter = new AlbumAdapter(getContext(), Constants.getAllAlbums(context),this);
         binding.albumRecyclerview.setAdapter(adapter);
         return binding.getRoot();

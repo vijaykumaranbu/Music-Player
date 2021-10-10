@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.SeekBar;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/colorBlueDark"/>
-    <corners android:topLeftRadius="@dimen/_24sdp"
-        android:topRightRadius="@dimen/_24sdp"/>
+    <item android:gravity="center">
+        <shape>
+            <gradient android:startColor="@color/colorBlueDark"
+                android:endColor="@color/colorBlueLight" />
+            <corners android:radius="@dimen/_40sdp"/>
+            <size android:width="@dimen/_20sdp"
+                android:height="@dimen/_3sdp"/>
+        </shape>
+    </item>
 
-</shape>
+</layer-list>

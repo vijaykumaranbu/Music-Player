@@ -95,25 +95,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textCurrentDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/rubik_medium"
         android:textColor="@color/colorTextSecondary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintStart_toStartOf="@id/seekbarPlay" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/rubik_medium"
         android:includeFontPadding="false"
         android:text="@{duration}"
         android:textColor="@color/colorTextSecondary"
@@ -121,7 +119,7 @@
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintEnd_toEndOf="@id/seekbarPlay" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textArtist"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
@@ -129,7 +127,6 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_45sdp"
         android:ellipsize="end"
-        android:fontFamily="@font/rubik_medium"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
@@ -139,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textName"
         android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
@@ -147,7 +144,7 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:ellipsize="end"
-        android:fontFamily="@font/rubik_bold"
+        style="@style/TextStyleBold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
@@ -193,10 +190,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/colorIcon" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_medium"
         android:includeFontPadding="false"
         android:text="@string/now_playing"
         android:textColor="@color/colorTextPrimary"

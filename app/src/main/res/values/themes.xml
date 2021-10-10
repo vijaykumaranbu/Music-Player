@@ -1,15 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:fontFamily">@font/rubik_medium</item>
     </style>
 
     <style name="FullScreenTheme" parent="Theme.MusicPlayer">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="CardViewStyle">
@@ -27,6 +29,16 @@
         <item name="android:thumb">@drawable/background_seekbar_thumb</item>
         <item name="android:minHeight">@dimen/_2sdp</item>
         <item name="android:maxHeight">@dimen/_2sdp</item>
+    </style>
+
+    <style name="TextStyleBold" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="android:fontFamily">@font/rubik_bold</item>
+    </style>
+
+    <style name="TextStyleMedium" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:fontFamily">@font/rubik_medium</item>
     </style>
 
 </resources>

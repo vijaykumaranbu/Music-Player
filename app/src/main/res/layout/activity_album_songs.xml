@@ -78,37 +78,35 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textAlbum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:fontFamily="@font/rubik_bold"
+                style="@style/TextStyleBold"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/album"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="@dimen/_14ssp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textArtist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:fontFamily="@font/rubik_medium"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/Artists"
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="@dimen/_12ssp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textSongs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/rubik_medium"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/songs"

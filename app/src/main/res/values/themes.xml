@@ -3,8 +3,8 @@
     <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="fontFamily">@font/rubik_medium</item>
-        <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
     <style name="FullScreenTheme" parent="Theme.MusicPlayer">
@@ -21,7 +21,6 @@
 
     <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="indicatorSize">@dimen/_28sdp</item>
-        <item name="fontFamily">@font/rubik_bold</item>
     </style>
 
     <style name="seekbarTheme">
@@ -32,13 +31,18 @@
     </style>
 
     <style name="TextStyleBold" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/rubik_bold</item>
-        <item name="android:fontFamily">@font/rubik_bold</item>
+        <item name="fontFamily">@font/popins_bold</item>
+        <item name="android:fontFamily">@font/popins_bold</item>
     </style>
 
     <style name="TextStyleMedium" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/rubik_medium</item>
-        <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="TextStyleMusic" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/florian</item>
+        <item name="android:fontFamily">@font/florian</item>
     </style>
 
 </resources>

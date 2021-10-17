@@ -37,7 +37,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_12ssp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textArtist"
@@ -48,7 +48,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_10ssp" />
 
     </LinearLayout>
 

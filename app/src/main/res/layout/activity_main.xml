@@ -31,8 +31,9 @@
             style="@style/TextStyleMusic"
             android:includeFontPadding="false"
             android:text="@string/music"
-            android:textSize="@dimen/_22ssp"
-            android:textColor="@color/colorTextPrimary"/>
+            android:textSize="@dimen/_24ssp"
+            android:textColor="@color/colorTextPrimary"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/imageSearchMusic"
@@ -64,17 +65,18 @@
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorFullWidth="false"
         style="@style/TabLayoutStyle"
+        app:tabTextAppearance="@style/TextStyleTab"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

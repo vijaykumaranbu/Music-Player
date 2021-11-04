@@ -7,15 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AlbumSongsActivity">
-    <View
-        android:id="@+id/imageSupporter"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_200sdp"
-        android:background="@null"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image"
@@ -28,6 +19,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/imageSupporter"/>
+
+    <View
+        android:id="@+id/imageSupporter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_180sdp"
+        android:background="@drawable/background_white_gradient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageBack"
@@ -62,8 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:background="@drawable/background_white"
-        app:layout_constraintTop_toTopOf="@+id/imageSupporter"
+        android:background="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@+id/imageSupporter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">

@@ -16,7 +16,7 @@
         android:layout_height="@dimen/_65sdp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_folder"
+        android:src="@drawable/image_music_folder"
         app:riv_corner_radius="@dimen/_8sdp" />
 
     <LinearLayout

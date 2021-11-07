@@ -13,10 +13,11 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
+        android:src="@drawable/image_holder"
         app:riv_corner_radius="@dimen/_8sdp" />
 
     <LinearLayout
@@ -36,19 +37,22 @@
             android:gravity="bottom"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:text="@string/song_name"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_13ssp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textArtist"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="@dimen/_3sdp"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:text="@string/artist_name"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_11ssp" />
 
     </LinearLayout>
 

@@ -31,7 +31,7 @@
             style="@style/TextStyleMusic"
             android:includeFontPadding="false"
             android:text="@string/music"
-            android:textSize="@dimen/_24ssp"
+            android:textSize="@dimen/_28ssp"
             android:textColor="@color/colorTextPrimary"
             android:textStyle="bold"/>
 

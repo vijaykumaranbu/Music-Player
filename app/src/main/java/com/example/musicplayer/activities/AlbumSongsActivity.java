@@ -180,8 +180,7 @@ public class AlbumSongsActivity extends AppCompatActivity implements AudioListen
         position++;
         if(audioList.size() <= position){
             position = 0;
-            Constants.mediaPlayer.stop();
-            Constants.mediaPlayer.release();
+            Constants.mediaPlayer = null;
             binding.playFloatButton.setFabIcon(ResourcesCompat.getDrawable(getResources(),R.drawable.ic_play,getTheme()));
         }
         else{

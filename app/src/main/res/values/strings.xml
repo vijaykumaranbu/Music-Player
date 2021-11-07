@@ -18,4 +18,6 @@
     <string name="Artists">Artists</string>
     <string name="Tracks">Tracks</string>
     <string name="folder_name">Folder Name</string>
+    <string name="song_name">Song Name</string>
+    <string name="artist_name">Artist Name</string>
 </resources>

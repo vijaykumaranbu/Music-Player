@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:textColor="@color/colorTextSecondary"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintStart_toStartOf="@id/seekbarPlay" />
@@ -114,7 +114,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:includeFontPadding="false"
         android:text="@{duration}"
-        android:textColor="@color/colorTextSecondary"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintEnd_toEndOf="@id/seekbarPlay" />
@@ -130,7 +130,7 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:textColor="@color/colorTextSecondary"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@+id/seekbarPlay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +172,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/image_holder"
-            app:riv_oval="true"/>
+            app:riv_oval="true" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -188,7 +188,7 @@
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorIcon" />
+        app:tint="@color/colorTextPrimary" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"

@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/progress_horizontal">
-        <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle">
-                <corners android:radius="@dimen/_10sdp"/>
-                <gradient android:startColor="@color/colorBlueDark"
-                    android:endColor="@color/colorBlueLight"/>
-            </shape>
-        </scale>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@android:id/background"
+        android:drawable="@drawable/background_seekbar_shadow" >
     </item>
 
-    <item android:id="@+id/progress_circular">
-        <shape android:shape="rectangle">
-            <size android:height="@dimen/_2sdp"/>
-            <solid android:color="@android:color/transparent"/>
-        </shape>
+    <item
+        android:id="@android:id/progress" >
+        <clip
+            android:drawable="@drawable/background_seekbar_progress" />
     </item>
 </layer-list>

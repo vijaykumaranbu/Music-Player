@@ -44,6 +44,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/colorTextPrimary" />
 
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="@dimen/_24sdp"-->
+<!--        android:contentDescription="@string/app_name"-->
+<!--        app:srcCompat="@drawable/ic_play"-->
+<!--        app:tint="@color/colorWhite"-->
+<!--        android:backgroundTint="@color/colorBlueDark"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageSupporter"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/imageSupporter"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
     <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
         android:id="@+id/playFloatButton"
         android:layout_width="wrap_content"
@@ -55,8 +67,8 @@
         app:fabIcon="@drawable/ic_play"
         app:fabIconColor="@color/colorPrimary"
         app:fabElevation="@dimen/_12sdp"
-        app:layout_constraintTop_toTopOf="@+id/imageSupporter"
-        app:layout_constraintBottom_toTopOf="@+id/imageSupporter"
+        app:layout_constraintTop_toBottomOf="@+id/imageSupporter"
+        app:layout_constraintBottom_toBottomOf="@+id/imageSupporter"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout

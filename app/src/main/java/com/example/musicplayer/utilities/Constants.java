@@ -3,6 +3,7 @@ package com.example.musicplayer.utilities;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,6 +20,8 @@ import java.util.Locale;
 
 public class Constants {
 
+    public static MediaPlayer mediaPlayer;
+
     public static final String KEY_PREFERENCE = "musicPreference";
     public static final String PLAY_MODE_SHUFFLE = "shuffle";
     public static final String PLAY_MODE_REPEAT = "repeat";
@@ -32,8 +35,9 @@ public class Constants {
     public static final String KEY_TRACK = "trackFragment";
     public static final String KEY_TOTAL_SONGS = "totalSongs";
     public static final String KEY_FOLDER_PATH = "folderPath" ;
-    private static final String TAG = "Constants";
+    public static final String TAG = "Constants";
     public static final String KEY_FOLDER = "folder";
+    public static final String KEY_CURRENT_ALBUM_POSITION = "currentAlbumPosition";
 
     public static ArrayList<AudioModel> getAllAudios(Context context) {
         ArrayList<AudioModel> audioList = new ArrayList<>();

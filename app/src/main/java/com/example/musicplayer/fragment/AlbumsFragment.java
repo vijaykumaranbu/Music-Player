@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -45,6 +46,7 @@ public class AlbumsFragment extends Fragment implements AlbumListener {
     @Override
     public void onAlbumClicked(AlbumModel album, int position) {
         Intent intent = new Intent(context, AlbumSongsActivity.class);
+        intent.putExtra(Constants.KEY_POSITION,position);
         intent.putExtra(Constants.KEY_FRAGMENT,Constants.KEY_ALBUM);
         intent.putExtra(Constants.KEY_ALBUM,album.getAlbum());
         intent.putExtra(Constants.KEY_ARTIST,album.getArtist());

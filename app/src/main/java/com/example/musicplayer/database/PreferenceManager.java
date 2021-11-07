@@ -23,4 +23,14 @@ public class PreferenceManager {
         return preference.getString(key,Constants.PLAY_MODE_LOOP);
     }
 
+    public void putInt(String key,int value){
+        SharedPreferences.Editor editor = preference.edit();
+        editor.putInt(key,value);
+        editor.apply();
+    }
+
+    public int getInt(String key){
+        return preference.getInt(key,-1);
+    }
+
 }

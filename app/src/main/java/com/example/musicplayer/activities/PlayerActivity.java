@@ -15,7 +15,6 @@ import com.example.musicplayer.databinding.ActivityPlayerBinding;
 import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,7 +24,6 @@ public class PlayerActivity extends AppCompatActivity implements
     private ActivityPlayerBinding binding;
     private int position;
     private ArrayList<AudioModel> audioList;
-    public static MediaPlayer mediaPlayer;
     private final Handler handler = new Handler();
     private boolean isPlayButtonPause = false;
     private PreferenceManager preferenceManager;
@@ -63,27 +61,27 @@ public class PlayerActivity extends AppCompatActivity implements
         binding.seekbarPlay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mediaPlayer != null && fromUser) {
-                    mediaPlayer.seekTo(progress * 1000);
+                if (Constants.mediaPlayer != null && fromUser) {
+                    Constants.mediaPlayer.seekTo(progress * 1000);
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                if (mediaPlayer.isPlaying() && !isPlayButtonPause) {
-                    mediaPlayer.pause();
+                if (Constants.mediaPlayer.isPlaying() && !isPlayButtonPause) {
+                    Constants.mediaPlayer.pause();
                 }
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (!mediaPlayer.isPlaying() && !isPlayButtonPause) {
-                    mediaPlayer.start();
+                if (!Constants.mediaPlayer.isPlaying() && !isPlayButtonPause) {
+                    Constants.mediaPlayer.start();
                 }
             }
         });
         binding.imagePlayMode.setOnClickListener(view -> setPlayMode());
-        mediaPlayer.setOnCompletionListener(this);
+        Constants.mediaPlayer.setOnCompletionListener(this);
     }
 
     private void setPlayMode() {
@@ -91,67 +89,67 @@ public class PlayerActivity extends AppCompatActivity implements
             case Constants.PLAY_MODE_LOOP:
                 binding.imagePlayMode.setImageResource(R.drawable.ic_repeat);
                 preferenceManager.putString(Constants.PLAY_MODE, Constants.PLAY_MODE_REPEAT);
-                mediaPlayer.setLooping(true);
+                Constants.mediaPlayer.setLooping(true);
                 break;
             case Constants.PLAY_MODE_REPEAT:
                 binding.imagePlayMode.setImageResource(R.drawable.ic_shuffle);
                 preferenceManager.putString(Constants.PLAY_MODE, Constants.PLAY_MODE_SHUFFLE);
-                if (mediaPlayer.isLooping())
-                    mediaPlayer.setLooping(false);
+                if (Constants.mediaPlayer.isLooping())
+                    Constants.mediaPlayer.setLooping(false);
                 break;
             case Constants.PLAY_MODE_SHUFFLE:
                 binding.imagePlayMode.setImageResource(R.drawable.ic_loop);
                 preferenceManager.putString(Constants.PLAY_MODE, Constants.PLAY_MODE_LOOP);
-                if (mediaPlayer.isLooping())
-                    mediaPlayer.setLooping(false);
+                if (Constants.mediaPlayer.isLooping())
+                    Constants.mediaPlayer.setLooping(false);
                 break;
         }
     }
 
     private void playPrevious() {
-        mediaPlayer.stop();
-        mediaPlayer.release();
+        Constants.mediaPlayer.stop();
+        Constants.mediaPlayer.release();
         if (preferenceManager.getString(Constants.PLAY_MODE).equals(Constants.PLAY_MODE_SHUFFLE))
             position = getRandomNumber();
         else
             position = (0 > --position) ? audioList.size() - 1 : position;
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
-        binding.seekbarPlay.setMax(mediaPlayer.getDuration() / 1000);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(this);
+        Constants.mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
+        binding.seekbarPlay.setMax(Constants.mediaPlayer.getDuration() / 1000);
+        Constants.mediaPlayer.start();
+        Constants.mediaPlayer.setOnCompletionListener(this);
         checkLoopIfTrue();
         loadAudioDetails();
         setAudioFocus();
     }
 
     private void playNext() {
-        mediaPlayer.stop();
-        mediaPlayer.release();
+        Constants.mediaPlayer.stop();
+        Constants.mediaPlayer.release();
         if (preferenceManager.getString(Constants.PLAY_MODE).equals(Constants.PLAY_MODE_SHUFFLE))
             position = getRandomNumber();
         else
             position = ((audioList.size() - 1) < ++position) ? 0 : position;
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
-        binding.seekbarPlay.setMax(mediaPlayer.getDuration() / 1000);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(this);
+        Constants.mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
+        binding.seekbarPlay.setMax(Constants.mediaPlayer.getDuration() / 1000);
+        Constants.mediaPlayer.start();
+        Constants.mediaPlayer.setOnCompletionListener(this);
         checkLoopIfTrue();
         loadAudioDetails();
         setAudioFocus();
     }
 
     private void checkLoopIfTrue() {
-        mediaPlayer.setLooping(preferenceManager.getString(Constants.PLAY_MODE).equals(Constants.PLAY_MODE_REPEAT));
+        Constants.mediaPlayer.setLooping(preferenceManager.getString(Constants.PLAY_MODE).equals(Constants.PLAY_MODE_REPEAT));
     }
 
     private void playPause() {
-        if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
+        if (Constants.mediaPlayer != null) {
+            if (Constants.mediaPlayer.isPlaying()) {
+                Constants.mediaPlayer.pause();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_play);
                 isPlayButtonPause = true;
             } else {
-                mediaPlayer.start();
+                Constants.mediaPlayer.start();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
                 isPlayButtonPause = false;
             }
@@ -175,20 +173,20 @@ public class PlayerActivity extends AppCompatActivity implements
         position = getIntent().getIntExtra(Constants.KEY_POSITION, -1);
         if (audioList != null && position != -1) {
             Uri uri = Uri.parse(audioList.get(position).getPath());
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
+            if (Constants.mediaPlayer != null) {
+                Constants.mediaPlayer.stop();
+                Constants.mediaPlayer.release();
             }
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
-            mediaPlayer.start();
-            binding.seekbarPlay.setMax(mediaPlayer.getDuration() / 1000);
+            Constants.mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
+            Constants.mediaPlayer.start();
+            binding.seekbarPlay.setMax(Constants.mediaPlayer.getDuration() / 1000);
             loadAudioDetails();
         }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mediaPlayer != null) {
-                    int currentPosition = mediaPlayer.getCurrentPosition() / 1000;
+                if (Constants.mediaPlayer != null) {
+                    int currentPosition = Constants.mediaPlayer.getCurrentPosition() / 1000;
                     binding.seekbarPlay.setProgress(currentPosition);
                     binding.textCurrentDuration.setText(getFormattedTime(currentPosition));
                 }
@@ -201,7 +199,7 @@ public class PlayerActivity extends AppCompatActivity implements
                 break;
             case Constants.PLAY_MODE_REPEAT:
                 binding.imagePlayMode.setImageResource(R.drawable.ic_repeat);
-                mediaPlayer.setLooping(true);
+                Constants.mediaPlayer.setLooping(true);
                 break;
             case Constants.PLAY_MODE_SHUFFLE:
                 binding.imagePlayMode.setImageResource(R.drawable.ic_shuffle);
@@ -223,8 +221,8 @@ public class PlayerActivity extends AppCompatActivity implements
         binding.textName.setText(Constants.removeMP3FormString(audioList.get(position).getName()));
         binding.textArtist.setText(audioList.get(position).getArtist());
         binding.textDuration.setText(getFormattedTime(audioList.get(position).getDuration() / 1000));
-        if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying())
+        if (Constants.mediaPlayer != null) {
+            if (Constants.mediaPlayer.isPlaying())
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
             else
                 binding.imagePlayPause.setImageResource(R.drawable.ic_play);
@@ -246,11 +244,11 @@ public class PlayerActivity extends AppCompatActivity implements
             playNext();
         } else if (Constants.PLAY_MODE_SHUFFLE.equals(preferenceManager.getString(Constants.PLAY_MODE))) {
             position = getRandomNumber();
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
-            binding.seekbarPlay.setMax(mediaPlayer.getDuration() / 1000);
-            mediaPlayer.start();
+            Constants.mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(audioList.get(position).getPath()));
+            binding.seekbarPlay.setMax(Constants.mediaPlayer.getDuration() / 1000);
+            Constants.mediaPlayer.start();
             loadAudioDetails();
-            mediaPlayer.setOnCompletionListener(this);
+            Constants.mediaPlayer.setOnCompletionListener(this);
         }
     }
 
@@ -268,13 +266,13 @@ public class PlayerActivity extends AppCompatActivity implements
         {
             case AudioManager.AUDIOFOCUS_GAIN:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                mediaPlayer.start();
+                Constants.mediaPlayer.start();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_pause);
                 isPlayButtonPause = false; // Resume your media player here
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                mediaPlayer.pause();
+                Constants.mediaPlayer.pause();
                 binding.imagePlayPause.setImageResource(R.drawable.ic_play);
                 isPlayButtonPause = true;// Pause your media player here
                 break;

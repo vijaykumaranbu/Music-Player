@@ -6,7 +6,7 @@
             <size
                 android:height="@dimen/_10sdp"
                 android:width="@dimen/_10sdp" />
-            <solid android:color="@color/colorBlueDark" />
+            <solid android:color="@color/colorWhite" />
         </shape>
     </item>
 

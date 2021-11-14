@@ -17,16 +17,17 @@
         tools:replace="android:theme">
         <activity
             android:name=".activities.FolderSongsActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".activities.AlbumSongsActivity"
             android:exported="true"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenLightTheme"/>
         <activity
             android:name=".activities.SearchMusicActivity"
             android:exported="true" />
         <activity
             android:name=".activities.PlayerActivity"
+            android:theme="@style/FullScreenLightTheme"
             android:exported="true"/>
         <activity
             android:name=".activities.MainActivity"

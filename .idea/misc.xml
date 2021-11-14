@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_black.xml" value="0.17743055555555556" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_blur.xml" value="0.17743055555555556" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_bottom_blur.xml" value="0.17743055555555556" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_cursor.xml" value="0.24027777777777778" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_gradient.xml" value="0.24027777777777778" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_image.xml" value="0.202734375" />
@@ -18,7 +21,10 @@
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_tablayout_indicator.xml" value="0.1707236842105263" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_title.xml" value="0.202734375" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_white.xml" value="0.24027777777777778" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_white_black_gradient.xml" value="0.17743055555555556" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_white_gradient.xml" value="0.199609375" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_white_gradient_blur_bottom_top.xml" value="0.17743055555555556" />
+        <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/background_white_gradient_blur_top_bottom.xml" value="0.17743055555555556" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/fab_src.xml" value="0.199609375" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/ic_loop.xml" value="0.24027777777777778" />
         <entry key="..\:/Users/VIJAY/AndroidStudioProjects/MusicPlayer/app/src/main/res/drawable/ic_repeat.xml" value="0.24027777777777778" />

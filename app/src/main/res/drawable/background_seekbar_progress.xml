@@ -9,8 +9,7 @@
                 <size android:height="@dimen/_10sdp"/>
                 <corners
                     android:radius="@dimen/_20sdp" />
-                <gradient android:startColor="@color/colorBlueDark"
-                    android:endColor="@color/colorBlueLight"/>
+                <solid android:color="@color/colorWhite"/>
             </shape>
         </clip>
     </item>

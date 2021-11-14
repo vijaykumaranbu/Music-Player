@@ -1,14 +1,31 @@
 package com.example.musicplayer.activities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.SeekBar;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.musicplayer.R;
 import com.example.musicplayer.database.PreferenceManager;
 import com.example.musicplayer.databinding.ActivityPlayerBinding;
@@ -16,11 +33,13 @@ import com.example.musicplayer.fragment.TracksFragment;
 import com.example.musicplayer.model.AudioModel;
 import com.example.musicplayer.utilities.Constants;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements
         MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
 
+    private static final String TAG = "PlayerActivity";
     private ActivityPlayerBinding binding;
     private int position;
     private ArrayList<AudioModel> audioList;
@@ -32,6 +51,8 @@ public class PlayerActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         binding = ActivityPlayerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
@@ -188,7 +209,7 @@ public class PlayerActivity extends AppCompatActivity implements
                 if (Constants.mediaPlayer != null) {
                     int currentPosition = Constants.mediaPlayer.getCurrentPosition() / 1000;
                     binding.seekbarPlay.setProgress(currentPosition);
-                    binding.textCurrentDuration.setText(getFormattedTime(currentPosition));
+                    binding.textCurrentTime.setText(getFormattedTime(currentPosition));
                 }
                 handler.postDelayed(this, 1000);
             }
@@ -211,11 +232,34 @@ public class PlayerActivity extends AppCompatActivity implements
         if (audioList.get(position).getAlbumArtUri() != null) {
             Glide.with(getApplicationContext())
                     .load(audioList.get(position).getAlbumArtUri())
-                    .placeholder(R.drawable.image_holder)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            setGradientBackground(resource);
+                            return false;
+                        }
+                    })
                     .into(binding.image);
         } else {
             Glide.with(getApplicationContext())
                     .load(R.drawable.image_holder)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            setGradientBackground(resource);
+                            return false;
+                        }
+                    })
                     .into(binding.image);
         }
         binding.textName.setText(Constants.removeMP3FormString(audioList.get(position).getName()));
@@ -227,6 +271,29 @@ public class PlayerActivity extends AppCompatActivity implements
             else
                 binding.imagePlayPause.setImageResource(R.drawable.ic_play);
         }
+    }
+
+    private void setGradientBackground(Drawable resource){
+        BitmapDrawable drawable = (BitmapDrawable) resource;
+        Bitmap imageBitmap = drawable.getBitmap();
+        Palette.from(imageBitmap).generate(palette -> {
+            assert palette != null;
+            Palette.Swatch swatch = palette.getDominantSwatch();
+            if(swatch != null){
+                binding.containerViewTop.setBackgroundColor(swatch.getRgb());
+                binding.containerViewBottom.setBackgroundColor(swatch.getRgb());
+                binding.containerGradientTop.setBackground(new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{swatch.getRgb(),Color.TRANSPARENT}
+                ));
+                binding.containerGradientBottom.setBackground(new GradientDrawable(
+                        GradientDrawable.Orientation.BOTTOM_TOP,
+                        new int[]{swatch.getRgb(),Color.TRANSPARENT}
+                ));
+                binding.textName.setTextColor(swatch.getTitleTextColor());
+                binding.textArtist.setTextColor(swatch.getBodyTextColor());
+            }
+        });
     }
 
     private String getFormattedTime(int currentPosition) {

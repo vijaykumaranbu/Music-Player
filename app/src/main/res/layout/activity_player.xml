@@ -1,11 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_player"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
     tools:context=".activities.PlayerActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_240sdp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/seekbarPlay"/>
+
+    <View
+        android:id="@+id/containerViewTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/image"/>
+
+    <View
+        android:id="@+id/containerViewBottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:id="@+id/containerGradientTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintTop_toBottomOf="@+id/containerViewTop"/>
+
+    <View
+        android:id="@+id/containerGradientBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintBottom_toTopOf="@+id/containerViewBottom"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#66FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/containerViewTop"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#66FFFFFF"
+        app:layout_constraintTop_toTopOf="@id/containerViewBottom"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_white_gradient_blur_top_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/containerViewTop"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_white_gradient_blur_bottom_top"
+        app:layout_constraintBottom_toTopOf="@+id/containerViewBottom"/>
 
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/playContainer"
@@ -13,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
         app:constraint_referenced_ids="imagePlayMode,imagePlayPrevious,imagePlayPause,imagePlayNext,imagePlaylist"
         app:flow_maxElementsWrap="5"
         app:flow_wrapMode="aligned"
@@ -31,7 +96,7 @@
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_shuffle"
-        app:tint="@color/colorTextPrimary" />
+        app:tint="@color/colorWhite" />
 
     <ImageView
         android:id="@+id/imagePlayPrevious"
@@ -43,7 +108,7 @@
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_previous"
-        app:tint="@color/colorTextPrimary" />
+        app:tint="@color/colorWhite" />
 
     <ImageView
         android:id="@+id/imagePlayPause"
@@ -51,9 +116,8 @@
         android:layout_height="@dimen/_45sdp"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_12sdp"
-        android:background="@drawable/background_image"
         android:contentDescription="@string/app_name"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_pause"
         app:tint="@color/colorWhite" />
 
@@ -67,7 +131,7 @@
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_next"
-        app:tint="@color/colorTextPrimary" />
+        app:tint="@color/colorWhite" />
 
     <ImageView
         android:id="@+id/imagePlaylist"
@@ -79,7 +143,7 @@
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_music"
-        app:tint="@color/colorTextPrimary" />
+        app:tint="@color/colorWhite" />
 
     <SeekBar
         android:id="@+id/seekbarPlay"
@@ -88,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_28sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:padding="@dimen/_4sdp"
         android:progress="30"
         app:layout_constraintBottom_toTopOf="@+id/playContainer"
@@ -96,12 +160,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textCurrentDuration"
+        android:id="@+id/textCurrentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:textColor="@color/colorTextPrimary"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintStart_toStartOf="@id/seekbarPlay" />
@@ -114,7 +178,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:includeFontPadding="false"
         android:text="@{duration}"
-        android:textColor="@color/colorTextPrimary"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toTopOf="@id/seekbarPlay"
         app:layout_constraintEnd_toEndOf="@id/seekbarPlay" />
@@ -125,82 +189,60 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_35sdp"
         android:ellipsize="end"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toTopOf="@+id/seekbarPlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textName"
+        style="@style/TextStyleBold"
         android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:ellipsize="end"
-        style="@style/TextStyleBold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toTopOf="@+id/textArtist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
-        app:cardElevation="@dimen/_10sdp"
-        app:cardCornerRadius="@dimen/_100sdp"
-        app:cardPreventCornerOverlap="false"
-        app:layout_constraintTop_toBottomOf="@id/imageBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textName">
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_holder"
-            app:riv_oval="true" />
-
-    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/imageBack"
         android:layout_width="@dimen/_24sdp"
         android:layout_height="@dimen/_24sdp"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_34sdp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorTextPrimary" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="@string/now_playing"
-        android:textColor="@color/colorTextPrimary"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageBack" />
+        app:layout_constraintTop_toTopOf="@id/imageBack"
+        app:layout_constraintBottom_toBottomOf="@id/imageBack"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
